@@ -2,7 +2,7 @@ using ToyRobotLibrary.Robot;
 
 namespace ToyRobotLibrary.Command
 {
-    public class LeftRotationCommand : ICommand
+    public class RightRotationCommand : ICommand
     {
         public void Execute(IRobot robot)
         {
@@ -11,19 +11,19 @@ namespace ToyRobotLibrary.Command
             switch (robot.Direction)
             {
                 case Direction.North:
-                    newDirection = Direction.West;
-                    break;
-
-                case Direction.South:
                     newDirection = Direction.East;
                     break;
-                
+
                 case Direction.East:
-                    newDirection = Direction.North;
+                    newDirection = Direction.South;
                     break;
 
                 case Direction.West:
-                    newDirection = Direction.South;
+                    newDirection = Direction.North;
+                    break;
+
+                case Direction.South:
+                    newDirection = Direction.West;
                     break;
             }
 
