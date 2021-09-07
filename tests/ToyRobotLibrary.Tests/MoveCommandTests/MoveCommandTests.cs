@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using Moq;
 using ToyRobotLibrary.Command;
 using ToyRobotLibrary.Configuration;
-using ToyRobotLibrary.Exceptions;
 using ToyRobotLibrary.Robot;
 using Xunit;
 
@@ -93,19 +92,6 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
 
             // Assert
             _robotMock.Verify(r => r.PlaceAt(It.Is<Location>(l => l.X == CurrentXCoordinate - 1 && l.Y == CurrentYCoordinate), It.Is<Direction>(d => d == currentDirection)), "X position should decrement by 1");
-        }
-
-        [Fact]
-        public void GivenRobotWhichIsNotPlaced_WhenMoved_ThenRobotDoesNotMove()
-        {
-            // Arrange
-            _robotMock.Setup(r => r.IsPlaced).Returns(false);
-
-            // Act
-            var ex = Assert.Throws<RobotNotPlacedException>(() => _moveCommand.Execute(_robotMock.Object));
-
-            // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Location>(), It.IsAny<Direction>()), Times.Never, "Unplaced robot should not be moved");
         }
     }
 }
