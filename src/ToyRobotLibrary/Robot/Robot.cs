@@ -8,6 +8,8 @@ namespace ToyRobotLibrary.Robot
 
         public Direction Direction => throw new NotImplementedException();
 
+        public bool IsPlaced => throw new NotImplementedException();
+
         public void PlaceAt(Location location, Direction direction)
         {
             throw new NotImplementedException();

@@ -1,11 +1,26 @@
+using Microsoft.Extensions.Logging;
+using ToyRobotLibrary.Exceptions;
 using ToyRobotLibrary.Robot;
 
 namespace ToyRobotLibrary.Command
 {
     public class RightRotationCommand : ICommand
     {
+        private readonly ILogger<RightRotationCommand> _logger;
+
+        public RightRotationCommand(ILogger<RightRotationCommand> logger)
+        {
+            _logger = logger;
+        }
+
         public void Execute(IRobot robot)
         {
+            if (!robot.IsPlaced)
+            {
+                _logger.LogError("Ignoring command {Command} as robot has not been placed on board", "RightRotate");
+                throw new RobotNotPlacedException("Ignoring RightRotate command as robot has not been placed on board");
+            }
+
             var newDirection = robot.Direction;
 
             switch (robot.Direction)
