@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ToyRobotLibrary.Configuration;
@@ -30,7 +29,7 @@ namespace ToyRobotLibrary.Command
                 throw new InvalidRobotOperationException(errorMessage);
             }
 
-            robot.PlaceAt(new Position { XCoordinate = X, YCoordinate = Y}, Direction.Value);
+            robot.PlaceAt(new Position { XCoordinate = X, YCoordinate = Y}, Direction ?? robot.Direction);
         }
     }
 }

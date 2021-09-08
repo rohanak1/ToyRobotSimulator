@@ -36,7 +36,7 @@ namespace ToyRobotLibrary.Tests.PlaceCommandTests
         }
 
         [Fact]
-        public void GivenAnUnplacedRobot_WhenPlacedWithLocationAndDirection_ThenRobotShouldBeAtNewLocation()
+        public void GivenAnUnplacedRobot_WhenPlacedWithPositionAndDirection_ThenRobotShouldBeAtNewLocation()
         {
             // Arrange
             _robotMock.Setup(r => r.IsPlaced).Returns(false);
@@ -53,7 +53,7 @@ namespace ToyRobotLibrary.Tests.PlaceCommandTests
         }
 
         [Fact]
-        public void GivenAnUnplacedRobot_WhenPlacedWithOnlyLocationAndNoDirection_ThenRobotIsNotPlaced()
+        public void GivenAnUnplacedRobot_WhenPlacedWithPositionAndNoDirection_ThenRobotIsNotPlaced()
         {
             // Arrange
             _robotMock.Setup(r => r.IsPlaced).Returns(false);
@@ -66,6 +66,25 @@ namespace ToyRobotLibrary.Tests.PlaceCommandTests
 
             // Assert
             _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.IsAny<Direction>()), Times.Never, "An unplaced robot should be given a location and direction to place it");
+        }
+
+        [Fact]
+        public void GivenAPlacedRobot_WhenPlacedWithOnlyPosition_ThenRobotIsPlacedAtNewLocation_WithSameDirection()
+        {
+            // Arrange
+            _robotMock.Setup(r => r.IsPlaced).Returns(true);
+            _robotMock.Setup(r => r.Direction).Returns(Direction.North);
+            _placeCommand.X = ExpectedXCoordinate;
+            _placeCommand.Y = ExpectedYCoordinate;
+
+            // Act
+            _placeCommand.Execute(_robotMock.Object);
+
+            // Assert
+            _robotMock.Verify(r => r.PlaceAt(
+                It.Is<Position>(p => p.XCoordinate == ExpectedXCoordinate && p.YCoordinate == ExpectedYCoordinate),
+                It.Is<Direction>(d => d == Direction.North)),
+                "Robot should be placed at new location with no change in direction");
         }
     }
 }
