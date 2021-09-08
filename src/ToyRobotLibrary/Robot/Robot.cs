@@ -4,15 +4,15 @@ namespace ToyRobotLibrary.Robot
 {
     public class Robot : IRobot
     {
-        public Position Location => throw new NotImplementedException();
+        public Position Location { get; private set; }
 
-        public Direction Direction => throw new NotImplementedException();
+        public Direction Direction { get; private set; }
 
-        public bool IsPlaced => throw new NotImplementedException();
+        public bool IsPlaced { get; private set; }
 
         public void PlaceAt(Position location, Direction direction)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

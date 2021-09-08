@@ -8,7 +8,7 @@ using Xunit;
 
 namespace ToyRobotLibrary.Tests.MoveCommandTests
 {
-    public class MoveCommandTests
+    public class SuccessfulMoveCommandTests
     {
         const int CurrentXCoordinate = 3;
         const int CurrentYCoordinate = 3;
@@ -19,7 +19,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
         private readonly Mock<IOptions<TableTopDimensions>> _tableTopDimensionsMock = new Mock<IOptions<TableTopDimensions>>();
         private readonly MoveCommand _moveCommand;
 
-        public MoveCommandTests()
+        public SuccessfulMoveCommandTests()
         {
             _tableTopDimensionsMock.Setup(t => t.Value).Returns(new TableTopDimensions
             {
@@ -34,8 +34,8 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
             _robotMock.Setup(r => r.IsPlaced).Returns(true);
             _robotMock.Setup(r => r.Location).Returns(new Position
             {
-                X = CurrentXCoordinate,
-                Y = CurrentYCoordinate
+                XCoordinate = CurrentXCoordinate,
+                YCoordinate = CurrentYCoordinate
             });
         }
 
@@ -49,7 +49,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
             _moveCommand.Execute(_robotMock.Object);
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.Is<Position>(l => l.X == CurrentXCoordinate && l.Y == CurrentYCoordinate + 1), It.Is<Direction>(d => d == Direction.North)), "Y position should increment by 1");
+            _robotMock.Verify(r => r.PlaceAt(It.Is<Position>(l => l.XCoordinate == CurrentXCoordinate && l.YCoordinate == CurrentYCoordinate + 1), It.Is<Direction>(d => d == Direction.North)), "Y position should increment by 1");
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
             _moveCommand.Execute(_robotMock.Object);
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.Is<Position>(l => l.X == CurrentXCoordinate && l.Y == CurrentYCoordinate - 1), It.Is<Direction>(d => d == currentDirection)), "Y position should decrement by 1");
+            _robotMock.Verify(r => r.PlaceAt(It.Is<Position>(l => l.XCoordinate == CurrentXCoordinate && l.YCoordinate == CurrentYCoordinate - 1), It.Is<Direction>(d => d == currentDirection)), "Y position should decrement by 1");
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
             _moveCommand.Execute(_robotMock.Object);
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.Is<Position>(l => l.X == CurrentXCoordinate + 1 && l.Y == CurrentYCoordinate), It.Is<Direction>(d => d == currentDirection)), "X position should increment by 1");
+            _robotMock.Verify(r => r.PlaceAt(It.Is<Position>(l => l.XCoordinate == CurrentXCoordinate + 1 && l.YCoordinate == CurrentYCoordinate), It.Is<Direction>(d => d == currentDirection)), "X position should increment by 1");
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
             _moveCommand.Execute(_robotMock.Object);
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.Is<Position>(l => l.X == CurrentXCoordinate - 1 && l.Y == CurrentYCoordinate), It.Is<Direction>(d => d == currentDirection)), "X position should decrement by 1");
+            _robotMock.Verify(r => r.PlaceAt(It.Is<Position>(l => l.XCoordinate == CurrentXCoordinate - 1 && l.YCoordinate == CurrentYCoordinate), It.Is<Direction>(d => d == currentDirection)), "X position should decrement by 1");
         }
     }
 }

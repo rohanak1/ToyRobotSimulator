@@ -4,7 +4,7 @@ namespace ToyRobotLibrary.Robot
 {
     public class Position
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int XCoordinate { get; set; }
+        public int YCoordinate { get; set; }
     }
 }

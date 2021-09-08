@@ -76,7 +76,7 @@ namespace ToyRobotLibrary.Tests.RotationCommandTests
             _robotMock.Setup(r => r.IsPlaced).Returns(false);
 
             // Act
-            var ex = Assert.Throws<RobotNotPlacedException>(() => _leftRotationCommand.Execute(_robotMock.Object));
+            var ex = Assert.Throws<InvalidRobotOperationException>(() => _leftRotationCommand.Execute(_robotMock.Object));
 
             // Assert
             _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.IsAny<Direction>()), Times.Never, "Left rotation should not be performed as robot is not placed");

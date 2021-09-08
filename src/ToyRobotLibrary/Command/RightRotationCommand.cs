@@ -18,7 +18,7 @@ namespace ToyRobotLibrary.Command
             if (!robot.IsPlaced)
             {
                 _logger.LogError("Ignoring command {Command} as robot has not been placed on board", "RightRotate");
-                throw new RobotNotPlacedException("Ignoring RightRotate command as robot has not been placed on board");
+                throw new InvalidRobotOperationException("Ignoring RightRotate command as robot has not been placed on board");
             }
 
             var newDirection = robot.Direction;

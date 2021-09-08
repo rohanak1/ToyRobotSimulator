@@ -41,12 +41,12 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
             _robotMock.Setup(r => r.Direction).Returns(Direction.North);
             _robotMock.Setup(r => r.Location).Returns(new Position
             {
-                X = 5,
-                Y = 5
+                XCoordinate = 5,
+                YCoordinate = 5
             });
 
             // Act
-            var ex = Assert.Throws<InvalidMoveException>(() => _moveCommand.Execute(_robotMock.Object));
+            var ex = Assert.Throws<InvalidRobotOperationException>(() => _moveCommand.Execute(_robotMock.Object));
 
             // Assert
             _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.IsAny<Direction>()), Times.Never, "Out of bounds move is not allowed");
@@ -59,12 +59,12 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
             _robotMock.Setup(r => r.Direction).Returns(Direction.South);
             _robotMock.Setup(r => r.Location).Returns(new Position
             {
-                X = 0,
-                Y = 0
+                XCoordinate = 0,
+                YCoordinate = 0
             });
 
             // Act
-            var ex = Assert.Throws<InvalidMoveException>(() => _moveCommand.Execute(_robotMock.Object));
+            var ex = Assert.Throws<InvalidRobotOperationException>(() => _moveCommand.Execute(_robotMock.Object));
 
             // Assert
             _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.IsAny<Direction>()), Times.Never, "Out of bounds move is not allowed");

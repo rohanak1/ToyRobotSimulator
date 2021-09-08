@@ -22,28 +22,28 @@ namespace ToyRobotLibrary.Command
             if (!robot.IsPlaced)
             {
                 _logger.LogError("Ignoring command {Command} as robot has not been placed on board", "Move");
-                throw new RobotNotPlacedException("Ignoring Move command as robot has not been placed on board");
+                throw new InvalidRobotOperationException("Ignoring Move command as robot has not been placed on board");
             }
 
             var location = new Position
             {
-                X = robot.Location.X,
-                Y = robot.Location.Y
+                XCoordinate = robot.Location.XCoordinate,
+                YCoordinate = robot.Location.YCoordinate
             };
 
             switch (robot.Direction)
             {
                 case Direction.North:
-                    location.Y++;
+                    location.YCoordinate++;
                     break;
                 case Direction.West:
-                    location.X--;
+                    location.XCoordinate--;
                     break;
                 case Direction.South:
-                    location.Y--;
+                    location.YCoordinate--;
                     break;
                 case Direction.East:
-                    location.X++;
+                    location.XCoordinate++;
                     break;
             }
 
@@ -54,11 +54,11 @@ namespace ToyRobotLibrary.Command
             else
             {
                 _logger.LogCritical("Destructive {Command} to {@Location} not allowed", "Move", location);
-                throw new InvalidMoveException("Destructive move - disallowed");
+                throw new InvalidRobotOperationException("Destructive move - disallowed");
             }
         }
 
-        private bool IsValidLocation(Position location) => location.X < _tableTopDimensions.X && location.X >= 0 &&
-                   location.Y < _tableTopDimensions.Y && location.Y >= 0;
+        private bool IsValidLocation(Position location) => location.XCoordinate < _tableTopDimensions.X && location.XCoordinate >= 0 &&
+                   location.YCoordinate < _tableTopDimensions.Y && location.YCoordinate >= 0;
     }
 }
