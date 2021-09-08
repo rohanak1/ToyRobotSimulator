@@ -22,6 +22,14 @@ namespace ToyRobotLibrary.Command
 
         public void Execute(IRobot robot)
         {
+            var position = new Position { XCoordinate = X, YCoordinate = Y};
+
+            if (!IsValidPosition(position))
+            {
+                _logger.LogCritical("Destructive {Command} to {@Position} not allowed", "Place", position);
+                throw new InvalidRobotOperationException($"Destructive place to {X}, {Y} disallowed");                
+            }
+
             if (!robot.IsPlaced && Direction == null)
             {
                 var errorMessage = "Position and Direction to be provided as robot is not yet placed on board";
@@ -29,7 +37,10 @@ namespace ToyRobotLibrary.Command
                 throw new InvalidRobotOperationException(errorMessage);
             }
 
-            robot.PlaceAt(new Position { XCoordinate = X, YCoordinate = Y}, Direction ?? robot.Direction);
+            robot.PlaceAt(position, Direction ?? robot.Direction);
         }
+
+        private bool IsValidPosition(Position position) => position.XCoordinate < _tableTopDimensions.X && position.XCoordinate >= 0 &&
+                   position.YCoordinate < _tableTopDimensions.Y && position.YCoordinate >= 0;
     }
 }

@@ -53,7 +53,7 @@ namespace ToyRobotLibrary.Tests.PlaceCommandTests
         }
 
         [Fact]
-        public void GivenAnUnplacedRobot_WhenPlacedWithPositionAndNoDirection_ThenRobotIsNotPlaced()
+        public void GivenAnUnplacedRobot_WhenPlacedWithPositionAndNoDirection_ThenCommandIsRejected()
         {
             // Arrange
             _robotMock.Setup(r => r.IsPlaced).Returns(false);
@@ -65,7 +65,11 @@ namespace ToyRobotLibrary.Tests.PlaceCommandTests
             var ex = Assert.Throws<InvalidRobotOperationException>(() => _placeCommand.Execute(_robotMock.Object));
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.IsAny<Direction>()), Times.Never, "An unplaced robot should be given a position and direction to place it");
+            _robotMock.Verify(r => r.PlaceAt(
+                It.IsAny<Position>(),
+                It.IsAny<Direction>()),
+                Times.Never,
+                "An unplaced robot should be given a position and direction to place it");
         }
 
         [Fact]
@@ -85,6 +89,25 @@ namespace ToyRobotLibrary.Tests.PlaceCommandTests
                 It.Is<Position>(p => p.XCoordinate == ExpectedXCoordinate && p.YCoordinate == ExpectedYCoordinate),
                 It.Is<Direction>(d => d == Direction.North)),
                 "Robot should be placed at new position with no change in direction");
+        }
+
+        [Fact]
+        public void GivenARobot_WhenNewPositionIsOutOfBounds_ThenCommandIsRejected()
+        {
+            // Arrange
+            _placeCommand.Direction = Direction.North;
+            _placeCommand.X = MaxXCoordinate;
+            _placeCommand.Y = MaxYCoordinate;
+
+            // Act
+            var ex = Assert.Throws<InvalidRobotOperationException>(() => _placeCommand.Execute(_robotMock.Object));
+
+            // Assert
+            _robotMock.Verify(r => r.PlaceAt(
+                It.IsAny<Position>(),
+                It.IsAny<Direction>()),
+                Times.Never,
+                "Robot should not be placed at an out of bounds position");
         }
     }
 }

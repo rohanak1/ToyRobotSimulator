@@ -35,7 +35,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
         }
 
         [Fact]
-        public void GivenRobotAtNorthEastCornerOfBoard_WhenMoved_ThenRobotDoesNotMove()
+        public void GivenRobotAtNorthEastCornerOfBoard_WhenMoved_ThenCommandIsRejected()
         {
             // Arrange
             _robotMock.Setup(r => r.Direction).Returns(Direction.North);
@@ -53,7 +53,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
         }
 
         [Fact]
-        public void GivenRobotAtSouthWestCornerOfBoard_WhenMoved_ThenRobotDoesNotMove()
+        public void GivenRobotAtSouthWestCornerOfBoard_WhenMoved_ThenCommandIsRejected()
         {
             // Arrange
             _robotMock.Setup(r => r.Direction).Returns(Direction.South);

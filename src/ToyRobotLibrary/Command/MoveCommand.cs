@@ -47,15 +47,13 @@ namespace ToyRobotLibrary.Command
                     break;
             }
 
-            if (IsValidPosition(position))
-            {
-                robot.PlaceAt(position, robot.Direction);
-            }
-            else
+            if (!IsValidPosition(position))
             {
                 _logger.LogCritical("Destructive {Command} to {@Position} not allowed", "Move", position);
-                throw new InvalidRobotOperationException("Destructive move - disallowed");
+                throw new InvalidRobotOperationException("Destructive move - disallowed");                
             }
+
+            robot.PlaceAt(position, robot.Direction);
         }
 
         private bool IsValidPosition(Position position) => position.XCoordinate < _tableTopDimensions.X && position.XCoordinate >= 0 &&

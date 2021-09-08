@@ -70,7 +70,7 @@ namespace ToyRobotLibrary.Tests.RotationCommandTests
         }
 
         [Fact]
-        public void GivenARobotNotPlacedOnBoard_WhenRotatedRight_ThenRobotDoesNotRotate()
+        public void GivenARobotNotPlacedOnBoard_WhenRotatedRight_ThenCommandIsRejected()
         {
             // Arrange
             _robotMock.Setup(r => r.IsPlaced).Returns(false);
