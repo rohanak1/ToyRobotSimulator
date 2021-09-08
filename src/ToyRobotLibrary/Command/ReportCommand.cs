@@ -23,7 +23,7 @@ namespace ToyRobotLibrary.Command
         {
             if (robot.IsPlaced)
             {
-                var robotPosition = $"{robot.Position.XCoordinate},{robot.Position.YCoordinate},{robot.Direction}";
+                var robotPosition = $"Output: {robot.Position.XCoordinate},{robot.Position.YCoordinate},{robot.Direction}";
                 _textWriter.WriteLine(robotPosition);
             }
             else

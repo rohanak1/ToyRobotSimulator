@@ -40,7 +40,7 @@ namespace ToyRobotLibrary.Tests.ReportCommandTests
             _reportCommand.Execute(_robotMock.Object);
 
             // Assert
-            _writerMock.Verify(w => w.WriteLine(It.Is<string>(s =>s == $"{ExpectedXCoordinate},{ExpectedYCoordinate},{ExpectedDirection}")));
+            _writerMock.Verify(w => w.WriteLine(It.Is<string>(s =>s == $"Output: {ExpectedXCoordinate},{ExpectedYCoordinate},{ExpectedDirection}")));
         }
 
         [Fact]
