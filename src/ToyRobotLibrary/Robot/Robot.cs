@@ -12,7 +12,9 @@ namespace ToyRobotLibrary.Robot
 
         public void PlaceAt(Position position, Direction direction)
         {
-
+            Position = position;
+            Direction = direction;
+            IsPlaced = true;
         }
     }
 }
