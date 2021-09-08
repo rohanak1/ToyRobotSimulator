@@ -17,6 +17,8 @@ namespace ToyRobotLibrary.Command
             _tableTopDimensions = tableTopDimensions.Value;
         }
 
+        public string Type => "Move";
+
         public void Execute(IRobot robot)
         {
             if (!robot.IsPlaced)
@@ -49,7 +51,7 @@ namespace ToyRobotLibrary.Command
 
             if (!IsValidPosition(position))
             {
-                _logger.LogCritical("Destructive {Command} to {@Position} not allowed", "Move", position);
+                _logger.LogError("Destructive {Command} to {@Position} not allowed", "Move", position);
                 throw new InvalidRobotOperationException("Destructive move - disallowed");                
             }
 

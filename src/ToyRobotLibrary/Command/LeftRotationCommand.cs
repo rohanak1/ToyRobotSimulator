@@ -13,6 +13,8 @@ namespace ToyRobotLibrary.Command
             _logger = logger;
         }
 
+        public string Type => "Left-Rotation";
+
         public void Execute(IRobot robot)
         {
             if (!robot.IsPlaced)

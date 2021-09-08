@@ -1,9 +1,7 @@
 using System.IO;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using ToyRobotLibrary.Command;
-using ToyRobotLibrary.Configuration;
 using ToyRobotLibrary.Robot;
 using Xunit;
 
@@ -14,14 +12,12 @@ namespace ToyRobotLibrary.Tests.ReportCommandTests
         private readonly Mock<IRobot> _robotMock = new Mock<IRobot>();
         private readonly ReportCommand _reportCommand;
         private readonly Mock<TextWriter> _writerMock = new Mock<TextWriter>();
-        private Mock<IOptions<TableTopDimensions>> _tableTopDimensionsMock = new Mock<IOptions<TableTopDimensions>>();
 
         public ReportCommandTests()
         {
             _reportCommand = new ReportCommand(
                 _writerMock.Object,
-                new Mock<ILogger<ReportCommand>>().Object,
-                _tableTopDimensionsMock.Object);
+                new Mock<ILogger<ReportCommand>>().Object);
         }
 
         [Fact]

@@ -1,8 +1,5 @@
-using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using ToyRobotLibrary.Configuration;
 using ToyRobotLibrary.Robot;
 
 namespace ToyRobotLibrary.Command
@@ -11,17 +8,16 @@ namespace ToyRobotLibrary.Command
     {
         private readonly TextWriter _textWriter;
         private readonly ILogger<ReportCommand> _logger;
-        private readonly TableTopDimensions _tableTopDimensions;
 
         public ReportCommand(
             TextWriter textWriter,
-            ILogger<ReportCommand> logger,
-            IOptions<TableTopDimensions> tableTopDimensions)
+            ILogger<ReportCommand> logger)
         {
             _textWriter = textWriter;
             _logger = logger;
-            _tableTopDimensions = tableTopDimensions.Value;
         }
+
+        public string Type => "Report";
 
         public void Execute(IRobot robot)
         {
