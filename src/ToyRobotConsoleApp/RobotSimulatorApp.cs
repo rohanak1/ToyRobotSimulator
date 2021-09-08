@@ -37,6 +37,8 @@ namespace ToyRobotConsoleApp
             Console.WriteLine("RIGHT");
             Console.WriteLine("REPORT");
             Console.WriteLine("Ctrl-C to exit application");
+            Console.WriteLine("========================");
+            Console.WriteLine("Let us start\n");
 
             CommandExecutor();
             return Task.CompletedTask;
@@ -44,15 +46,29 @@ namespace ToyRobotConsoleApp
 
         private void CommandExecutor()
         {
-            while (true)
+            var input = "";
+            while (input != null)
             {
                 ICommand command = null;
 
                 try
                 {
-                    var input = Console.ReadLine();
+                    input = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(input))
+                    {
+                        continue;
+                    }
+
                     command = _commandFactory.GetCommand(input);
-                    command.Execute(_robot);
+                    if (command != null)
+                    {
+                        command.Execute(_robot);
+                    }
+                    else
+                    {
+                        _logger.LogError("Unknown command {Command} passed.Ignoring!", input);
+                        Console.WriteLine($"Unknown command {input} passed");
+                    }
                 }
                 catch (InvalidRobotOperationException ex)
                 {
