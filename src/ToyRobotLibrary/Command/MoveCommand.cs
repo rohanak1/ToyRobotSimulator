@@ -25,40 +25,40 @@ namespace ToyRobotLibrary.Command
                 throw new InvalidRobotOperationException("Ignoring Move command as robot has not been placed on board");
             }
 
-            var location = new Position
+            var position = new Position
             {
-                XCoordinate = robot.Location.XCoordinate,
-                YCoordinate = robot.Location.YCoordinate
+                XCoordinate = robot.Position.XCoordinate,
+                YCoordinate = robot.Position.YCoordinate
             };
 
             switch (robot.Direction)
             {
                 case Direction.North:
-                    location.YCoordinate++;
+                    position.YCoordinate++;
                     break;
                 case Direction.West:
-                    location.XCoordinate--;
+                    position.XCoordinate--;
                     break;
                 case Direction.South:
-                    location.YCoordinate--;
+                    position.YCoordinate--;
                     break;
                 case Direction.East:
-                    location.XCoordinate++;
+                    position.XCoordinate++;
                     break;
             }
 
-            if (IsValidLocation(location))
+            if (IsValidPosition(position))
             {
-                robot.PlaceAt(location, robot.Direction);
+                robot.PlaceAt(position, robot.Direction);
             }
             else
             {
-                _logger.LogCritical("Destructive {Command} to {@Location} not allowed", "Move", location);
+                _logger.LogCritical("Destructive {Command} to {@Position} not allowed", "Move", position);
                 throw new InvalidRobotOperationException("Destructive move - disallowed");
             }
         }
 
-        private bool IsValidLocation(Position location) => location.XCoordinate < _tableTopDimensions.X && location.XCoordinate >= 0 &&
-                   location.YCoordinate < _tableTopDimensions.Y && location.YCoordinate >= 0;
+        private bool IsValidPosition(Position position) => position.XCoordinate < _tableTopDimensions.X && position.XCoordinate >= 0 &&
+                   position.YCoordinate < _tableTopDimensions.Y && position.YCoordinate >= 0;
     }
 }

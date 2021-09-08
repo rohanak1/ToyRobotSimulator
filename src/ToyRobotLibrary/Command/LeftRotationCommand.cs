@@ -42,7 +42,7 @@ namespace ToyRobotLibrary.Command
                     break;
             }
 
-            robot.PlaceAt(robot.Location, newDirection);
+            robot.PlaceAt(robot.Position, newDirection);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
                 _tableTopDimensionsMock.Object);
 
             _robotMock.Setup(r => r.IsPlaced).Returns(true);
-            _robotMock.Setup(r => r.Location).Returns(new Position
+            _robotMock.Setup(r => r.Position).Returns(new Position
             {
                 XCoordinate = CurrentXCoordinate,
                 YCoordinate = CurrentYCoordinate

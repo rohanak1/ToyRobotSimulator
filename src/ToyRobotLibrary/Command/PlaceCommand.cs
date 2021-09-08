@@ -24,7 +24,7 @@ namespace ToyRobotLibrary.Command
         {
             if (!robot.IsPlaced && Direction == null)
             {
-                var errorMessage = "Location and Direction to be provided as robot is not yet placed on board";
+                var errorMessage = "Position and Direction to be provided as robot is not yet placed on board";
                 _logger.LogCritical(errorMessage);
                 throw new InvalidRobotOperationException(errorMessage);
             }

@@ -39,7 +39,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
         {
             // Arrange
             _robotMock.Setup(r => r.Direction).Returns(Direction.North);
-            _robotMock.Setup(r => r.Location).Returns(new Position
+            _robotMock.Setup(r => r.Position).Returns(new Position
             {
                 XCoordinate = 5,
                 YCoordinate = 5
@@ -57,7 +57,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
         {
             // Arrange
             _robotMock.Setup(r => r.Direction).Returns(Direction.South);
-            _robotMock.Setup(r => r.Location).Returns(new Position
+            _robotMock.Setup(r => r.Position).Returns(new Position
             {
                 XCoordinate = 0,
                 YCoordinate = 0
