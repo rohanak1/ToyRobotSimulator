@@ -26,7 +26,7 @@ namespace ToyRobotLibrary.Tests.MoveCommandTests
             var ex = Assert.Throws<RobotNotPlacedException>(() => _moveCommand.Execute(_robotMock.Object));
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Location>(), It.IsAny<Direction>()), Times.Never, "Unplaced robot should not be moved");
+            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.IsAny<Direction>()), Times.Never, "Unplaced robot should not be moved");
         }
     }
 }

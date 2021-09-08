@@ -25,7 +25,7 @@ namespace ToyRobotLibrary.Command
                 throw new RobotNotPlacedException("Ignoring Move command as robot has not been placed on board");
             }
 
-            var location = new Location
+            var location = new Position
             {
                 X = robot.Location.X,
                 Y = robot.Location.Y
@@ -51,9 +51,14 @@ namespace ToyRobotLibrary.Command
             {
                 robot.PlaceAt(location, robot.Direction);
             }
+            else
+            {
+                _logger.LogCritical("Destructive {Command} to {@Location} not allowed", "Move", location);
+                throw new InvalidMoveException("Destructive move - disallowed");
+            }
         }
 
-        private bool IsValidLocation(Location location) => location.X < _tableTopDimensions.X && location.X >= 0 &&
+        private bool IsValidLocation(Position location) => location.X < _tableTopDimensions.X && location.X >= 0 &&
                    location.Y < _tableTopDimensions.Y && location.Y >= 0;
     }
 }

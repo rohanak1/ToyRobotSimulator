@@ -27,7 +27,7 @@ namespace ToyRobotLibrary.Tests.RotationCommandTests
             _rightRotationCommand.Execute(_robotMock.Object);
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Location>(), It.Is<Direction>(d => d == Direction.East)), "North facing robot should face east on right rotation");
+            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.Is<Direction>(d => d == Direction.East)), "North facing robot should face east on right rotation");
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace ToyRobotLibrary.Tests.RotationCommandTests
             _rightRotationCommand.Execute(_robotMock.Object);
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Location>(), It.Is<Direction>(d => d == Direction.South)), "East facing robot should face south on right rotation");
+            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.Is<Direction>(d => d == Direction.South)), "East facing robot should face south on right rotation");
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace ToyRobotLibrary.Tests.RotationCommandTests
             _rightRotationCommand.Execute(_robotMock.Object);
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Location>(), It.Is<Direction>(d => d == Direction.North)), "West facing robot should face north on right rotation");
+            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.Is<Direction>(d => d == Direction.North)), "West facing robot should face north on right rotation");
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace ToyRobotLibrary.Tests.RotationCommandTests
             _rightRotationCommand.Execute(_robotMock.Object);
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Location>(), It.Is<Direction>(d => d == Direction.West)), "South facing robot should face west on right rotation");
+            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.Is<Direction>(d => d == Direction.West)), "South facing robot should face west on right rotation");
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace ToyRobotLibrary.Tests.RotationCommandTests
             var ex = Assert.Throws<RobotNotPlacedException>(() => _rightRotationCommand.Execute(_robotMock.Object));
 
             // Assert
-            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Location>(), It.IsAny<Direction>()), Times.Never, "Right rotation should not be performed as robot is not placed");
+            _robotMock.Verify(r => r.PlaceAt(It.IsAny<Position>(), It.IsAny<Direction>()), Times.Never, "Right rotation should not be performed as robot is not placed");
         }
     }
 }
