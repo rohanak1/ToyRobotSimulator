@@ -1,9 +1,8 @@
 using System;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using ToyRobotLibrary.Command;
-using ToyRobotLibrary.Configuration;
+using ToyRobotLibrary.Robot;
 
 namespace ToyRobotLibrary.CommandFactory
 {
@@ -24,35 +23,65 @@ namespace ToyRobotLibrary.CommandFactory
             }
 
             var commandArguments = command.ToUpper().Split(' ');
-            var tableTopDimensionsOptions = _serviceProvider.GetRequiredService<IOptions<TableTopDimensions>>();
 
             switch (commandArguments[0])
             {
-                /*
                 case "PLACE":
                 {
-                    var logger = _serviceProvider.GetRequiredService<ILogger<PlaceCommand>>();
-                    var placeCommand = new PlaceCommand(logger, tableTopDimensionsOptions);
-                    var placeCommandOptions = commandArguments[1].Split(',');
-                    placeCommand.X = int.Parse(placeCommandOptions[0]);
-                    placeCommand.Y = int.Parse(placeCommandOptions[1]);
-                }*/
+                    if (commandArguments.Length != 2)
+                    {
+                        return null;
+                    }
+                    return Build(commandArguments[1]);
+                }
 
                 case "MOVE":
-                    return new MoveCommand(_serviceProvider.GetRequiredService<ILogger<MoveCommand>>(), tableTopDimensionsOptions);
+                    return _serviceProvider.GetRequiredService<MoveCommand>();
                 
                 case "LEFT":
-                    return new LeftRotationCommand(_serviceProvider.GetRequiredService<ILogger<LeftRotationCommand>>());
+                    return _serviceProvider.GetRequiredService<LeftRotationCommand>();
 
                 case "RIGHT":
-                    return new RightRotationCommand(_serviceProvider.GetRequiredService<ILogger<RightRotationCommand>>());
+                    return _serviceProvider.GetRequiredService<RightRotationCommand>();
                 
                 case "REPORT":
-                    return new ReportCommand(Console.Out, _serviceProvider.GetRequiredService<ILogger<ReportCommand>>());
+                    return _serviceProvider.GetRequiredService<ReportCommand>();
                 
                 default:
                     return null;
             }
+        }
+
+        private PlaceCommand Build(string commandString)
+        {
+            var positionAndDirectionCommandPattern = new Regex(@"(?<xPosition>\d),(?<yPosition>\d),(?<direction>NORTH|EAST|WEST|SOUTH)");
+            var positionAndDirectionCommandMatch = positionAndDirectionCommandPattern.Match(commandString);
+
+            var placeCommand = _serviceProvider.GetRequiredService<PlaceCommand>();
+
+            if (positionAndDirectionCommandMatch.Success)
+            {
+                Enum.TryParse(typeof(Direction), positionAndDirectionCommandMatch.Groups["direction"].Value,
+                        ignoreCase: true,
+                        out var result);
+
+                placeCommand.X = int.Parse(positionAndDirectionCommandMatch.Groups["xPosition"].Value);
+                placeCommand.Y = int.Parse(positionAndDirectionCommandMatch.Groups["yPosition"].Value);
+                placeCommand.Direction = (Direction)result;
+
+                return placeCommand;
+            }
+
+            var positionOnlyCommandPattern = new Regex(@"^(?<xPosition>\d),(?<yPosition>\d)$");
+            var positionOnlyCommandMatch = positionOnlyCommandPattern.Match(commandString);
+            if (positionOnlyCommandMatch.Success) 
+            {
+                placeCommand.X = int.Parse(positionOnlyCommandMatch.Groups["xPosition"].Value);
+                placeCommand.Y = int.Parse(positionOnlyCommandMatch.Groups["yPosition"].Value);
+
+                return placeCommand;
+            }
+            return null;
         }
     }
 }
